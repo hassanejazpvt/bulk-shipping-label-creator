@@ -2,9 +2,9 @@
 Shipping price calculation
 """
 
+import logging
 from decimal import Decimal
 from typing import Optional
-import logging
 
 logger = logging.getLogger("shipping_platform")
 

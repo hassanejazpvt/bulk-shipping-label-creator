@@ -259,17 +259,17 @@ export default function Step2Review({
   return (
     <div className="max-w-7xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
           Review and Edit File (Step 2 of 3)
         </h1>
-        <p className="text-gray-600">
+        <p className="text-sm md:text-base text-gray-600">
           Review your imported data, make edits, and apply bulk changes
         </p>
       </div>
 
       {/* Search and Bulk Actions */}
-      <div className="bg-white rounded-lg border border-gray-200 p-4 mb-6">
-        <div className="flex items-center gap-4">
+      <div className="bg-white rounded-lg border border-gray-200 p-3 md:p-4 mb-6">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
             <input
@@ -277,7 +277,7 @@ export default function Step2Review({
               placeholder="Search by order number, name, or address..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm md:text-base"
             />
           </div>
         </div>
@@ -297,128 +297,130 @@ export default function Step2Review({
 
       {/* Data Table */}
       <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-200">
-              <tr>
-                <th className="px-4 py-3 text-left">
-                  <button
-                    onClick={handleSelectAll}
-                    className="flex items-center"
-                  >
-                    {selectedIds.size === filteredShipments.length &&
-                    filteredShipments.length > 0 ? (
-                      <CheckSquare className="w-5 h-5 text-primary-600" />
-                    ) : (
-                      <Square className="w-5 h-5 text-gray-400" />
-                    )}
-                  </button>
-                </th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                  Ship From
-                </th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                  Ship To
-                </th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                  Package Details
-                </th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                  Order No
-                </th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                  Status
-                </th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {filteredShipments.length === 0 ? (
+        <div className="overflow-x-auto -mx-4 sm:mx-0">
+          <div className="inline-block min-w-full align-middle">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
-                  <td
-                    colSpan={7}
-                    className="px-4 py-12 text-center text-gray-500"
-                  >
-                    No shipments found
-                  </td>
+                  <th className="px-3 md:px-4 py-3 text-left">
+                    <button
+                      onClick={handleSelectAll}
+                      className="flex items-center"
+                    >
+                      {selectedIds.size === filteredShipments.length &&
+                      filteredShipments.length > 0 ? (
+                        <CheckSquare className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
+                      ) : (
+                        <Square className="w-4 h-4 md:w-5 md:h-5 text-gray-400" />
+                      )}
+                    </button>
+                  </th>
+                  <th className="px-3 md:px-4 py-3 text-left text-xs md:text-sm font-semibold text-gray-700 whitespace-nowrap">
+                    Ship From
+                  </th>
+                  <th className="px-3 md:px-4 py-3 text-left text-xs md:text-sm font-semibold text-gray-700 whitespace-nowrap">
+                    Ship To
+                  </th>
+                  <th className="px-3 md:px-4 py-3 text-left text-xs md:text-sm font-semibold text-gray-700 whitespace-nowrap">
+                    Package Details
+                  </th>
+                  <th className="px-3 md:px-4 py-3 text-left text-xs md:text-sm font-semibold text-gray-700 whitespace-nowrap">
+                    Order No
+                  </th>
+                  <th className="px-3 md:px-4 py-3 text-left text-xs md:text-sm font-semibold text-gray-700 whitespace-nowrap">
+                    Status
+                  </th>
+                  <th className="px-3 md:px-4 py-3 text-left text-xs md:text-sm font-semibold text-gray-700 whitespace-nowrap">
+                    Actions
+                  </th>
                 </tr>
-              ) : (
-                filteredShipments.map((shipment) => (
-                  <tr
-                    key={shipment.id}
-                    className={`hover:bg-gray-50 ${selectedIds.has(shipment.id) ? "bg-primary-50" : ""}`}
-                  >
-                    <td className="px-4 py-4">
-                      <button onClick={() => handleSelectOne(shipment.id)}>
-                        {selectedIds.has(shipment.id) ? (
-                          <CheckSquare className="w-5 h-5 text-primary-600" />
-                        ) : (
-                          <Square className="w-5 h-5 text-gray-400" />
-                        )}
-                      </button>
-                    </td>
-                    <td className="px-4 py-4 text-sm text-gray-900">
-                      {shipment.ship_from_formatted || "Not set"}
-                    </td>
-                    <td className="px-4 py-4 text-sm text-gray-900">
-                      {shipment.ship_to_formatted}
-                    </td>
-                    <td className="px-4 py-4 text-sm text-gray-900">
-                      {shipment.package_details_formatted || "Not set"}
-                    </td>
-                    <td className="px-4 py-4 text-sm text-gray-900">
-                      {shipment.order_no || "-"}
-                    </td>
-                    <td className="px-4 py-4">
-                      <StatusBadge status={shipment.status} />
-                    </td>
-                    <td className="px-4 py-4">
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => handleEdit(shipment, "address")}
-                          className="p-1 text-primary-600 hover:bg-primary-50 rounded"
-                          title="Edit Address"
-                        >
-                          <Edit className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={() => handleEdit(shipment, "package")}
-                          className="p-1 text-primary-600 hover:bg-primary-50 rounded"
-                          title="Edit Package"
-                        >
-                          <Edit className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(shipment.id)}
-                          className="p-1 text-red-600 hover:bg-red-50 rounded"
-                          title="Delete"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {filteredShipments.length === 0 ? (
+                  <tr>
+                    <td
+                      colSpan={7}
+                      className="px-4 py-12 text-center text-gray-500"
+                    >
+                      No shipments found
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ) : (
+                  filteredShipments.map((shipment) => (
+                    <tr
+                      key={shipment.id}
+                      className={`hover:bg-gray-50 ${selectedIds.has(shipment.id) ? "bg-primary-50" : ""}`}
+                    >
+                      <td className="px-3 md:px-4 py-4">
+                        <button onClick={() => handleSelectOne(shipment.id)}>
+                          {selectedIds.has(shipment.id) ? (
+                            <CheckSquare className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
+                          ) : (
+                            <Square className="w-4 h-4 md:w-5 md:h-5 text-gray-400" />
+                          )}
+                        </button>
+                      </td>
+                      <td className="px-3 md:px-4 py-4 text-xs md:text-sm text-gray-900">
+                        {shipment.ship_from_formatted || "Not set"}
+                      </td>
+                      <td className="px-3 md:px-4 py-4 text-xs md:text-sm text-gray-900">
+                        {shipment.ship_to_formatted}
+                      </td>
+                      <td className="px-3 md:px-4 py-4 text-xs md:text-sm text-gray-900">
+                        {shipment.package_details_formatted || "Not set"}
+                      </td>
+                      <td className="px-3 md:px-4 py-4 text-xs md:text-sm text-gray-900">
+                        {shipment.order_no || "-"}
+                      </td>
+                      <td className="px-3 md:px-4 py-4">
+                        <StatusBadge status={shipment.status} />
+                      </td>
+                      <td className="px-3 md:px-4 py-4">
+                        <div className="flex items-center gap-1 md:gap-2">
+                          <button
+                            onClick={() => handleEdit(shipment, "address")}
+                            className="p-1 text-primary-600 hover:bg-primary-50 rounded"
+                            title="Edit Address"
+                          >
+                            <Edit className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => handleEdit(shipment, "package")}
+                            className="p-1 text-primary-600 hover:bg-primary-50 rounded"
+                            title="Edit Package"
+                          >
+                            <Edit className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(shipment.id)}
+                            className="p-1 text-red-600 hover:bg-red-50 rounded"
+                            title="Delete"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
       {/* Navigation */}
-      <div className="flex items-center justify-between mt-6">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mt-6">
         <button
           onClick={handleBack}
-          className="flex items-center gap-2 px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+          className="flex items-center justify-center gap-2 px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors w-full sm:w-auto"
         >
           <ArrowLeft className="w-4 h-4" />
           Back
         </button>
         <button
           onClick={handleContinue}
-          className="flex items-center gap-2 px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+          className="flex items-center justify-center gap-2 px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors w-full sm:w-auto"
         >
           Continue
           <ArrowRight className="w-4 h-4" />

@@ -46,8 +46,11 @@ install-frontend: ## Install Node.js dependencies
 # Formatting
 format: format-backend format-frontend ## Format all code
 
-format-backend: ## Format Python code with black
-	@echo "$(BLUE)Formatting Python code...$(NC)"
+format-backend: ## Format Python code with black and isort
+	@echo "$(BLUE)Formatting Python imports with isort...$(NC)"
+	@$(VENV_BIN)/isort $(BACKEND_DIR)/shipping_platform 2>/dev/null || \
+	 $(VENV_BIN)/isort $(BACKEND_DIR) --skip venv
+	@echo "$(BLUE)Formatting Python code with black...$(NC)"
 	@$(VENV_BIN)/black $(BACKEND_DIR)/shipping_platform --line-length 100 2>/dev/null || \
 	 $(VENV_BIN)/black $(BACKEND_DIR) --line-length 100 --exclude=venv
 	@echo "$(GREEN)✓ Python code formatted$(NC)"

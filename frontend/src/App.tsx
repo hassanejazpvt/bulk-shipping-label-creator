@@ -18,6 +18,7 @@ import { apiClient } from "./services/api";
 function AppContent() {
   const location = useLocation();
   const [shipments, setShipments] = useState<Shipment[]>([]);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
 
   // Load shipments on mount and when navigating to review/shipping pages
@@ -96,12 +97,23 @@ function AppContent() {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      <Sidebar />
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      <div className="flex-1 flex flex-col">
-        <Header totalPrice={currentStep === 3 ? totalPrice : undefined} />
+      {/* Overlay for mobile sidebar */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
-        <main className="flex-1 p-6">
+      <div className="flex-1 flex flex-col overflow-x-auto">
+        <Header
+          totalPrice={currentStep === 3 ? totalPrice : undefined}
+          onMenuClick={() => setSidebarOpen(!sidebarOpen)}
+        />
+
+        <main className="flex-1 p-4 md:p-6">
           <Routes>
             <Route path="/" element={<Navigate to="/upload" replace />} />
             <Route

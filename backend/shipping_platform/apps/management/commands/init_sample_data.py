@@ -11,8 +11,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # Clear existing data (optional)
-        # SavedAddress.objects.all().delete()
-        # SavedPackage.objects.all().delete()
+        SavedAddress.objects.all().delete()
+        SavedPackage.objects.all().delete()
 
         # Create sample addresses if they don't exist
         addresses_data = [

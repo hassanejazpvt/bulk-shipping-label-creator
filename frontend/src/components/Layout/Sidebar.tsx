@@ -18,6 +18,11 @@ interface MenuItem {
   active?: boolean;
 }
 
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
 const menuItems: MenuItem[] = [
   { name: "Dashboard", path: "/", icon: LayoutDashboard },
   { name: "Create a Label", path: "/create-label", icon: Tag },
@@ -29,11 +34,18 @@ const menuItems: MenuItem[] = [
   { name: "Support & Help", path: "/support", icon: HelpCircle },
 ];
 
-function Sidebar() {
+function Sidebar({ isOpen, onClose }: SidebarProps) {
   const location = useLocation();
 
   return (
-    <div className="w-64 bg-gray-900 text-white min-h-screen flex flex-col">
+    <div
+      className={`
+        fixed lg:static inset-y-0 left-0 z-50
+        w-64 bg-gray-900 text-white min-h-screen flex flex-col
+        transform transition-transform duration-300 ease-in-out
+        ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+      `}
+    >
       <div className="p-6 border-b border-gray-800">
         <h1 className="text-xl font-bold">Shipping Platform</h1>
       </div>
@@ -63,6 +75,9 @@ function Sidebar() {
                   onClick={(e) => {
                     if (!item.active) {
                       e.preventDefault();
+                    } else {
+                      // Close sidebar on mobile when navigating
+                      onClose();
                     }
                   }}
                 >

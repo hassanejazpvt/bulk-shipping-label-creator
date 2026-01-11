@@ -5,8 +5,8 @@ CSV parsing and data validation utilities
 import csv
 import io
 import logging
-from typing import List, Dict, Any, Optional
 from decimal import Decimal, InvalidOperation
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger("shipping_platform")
 

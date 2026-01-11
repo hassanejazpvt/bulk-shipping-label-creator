@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Shipment, SavedAddress, SavedPackage
+
+from .models import SavedAddress, SavedPackage, Shipment
 
 
 class SavedAddressSerializer(serializers.ModelSerializer):

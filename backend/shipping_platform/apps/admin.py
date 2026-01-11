@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Shipment, SavedAddress, SavedPackage
+
+from .models import SavedAddress, SavedPackage, Shipment
 
 
 @admin.register(SavedAddress)

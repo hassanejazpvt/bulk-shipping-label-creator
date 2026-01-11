@@ -92,10 +92,10 @@ export default function Step1Upload({ onUploadSuccess }: Step1UploadProps) {
   return (
     <div className="max-w-6xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
           Upload Spreadsheet (Step 1 of 3)
         </h1>
-        <p className="text-gray-600">
+        <p className="text-sm md:text-base text-gray-600">
           Upload your CSV file containing shipping order data
         </p>
       </div>
@@ -105,7 +105,7 @@ export default function Step1Upload({ onUploadSuccess }: Step1UploadProps) {
         <div className="lg:col-span-2">
           <div
             className={`
-              border-2 border-dashed rounded-lg p-12 text-center transition-colors
+              border-2 border-dashed rounded-lg p-6 md:p-12 text-center transition-colors
               ${
                 isDragging
                   ? "border-primary-500 bg-primary-50"
@@ -134,13 +134,13 @@ export default function Step1Upload({ onUploadSuccess }: Step1UploadProps) {
               </div>
             ) : (
               <div className="space-y-4">
-                <Upload className="w-16 h-16 text-gray-400 mx-auto" />
+                <Upload className="w-12 h-12 md:w-16 md:h-16 text-gray-400 mx-auto" />
                 <div>
-                  <p className="text-lg font-medium text-gray-900 mb-2">
+                  <p className="text-base md:text-lg font-medium text-gray-900 mb-2">
                     Drag and drop your CSV file here
                   </p>
                   <p className="text-gray-500 mb-4">or</p>
-                  <button className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
+                  <button className="w-full sm:w-auto px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
                     Browse Files
                   </button>
                 </div>

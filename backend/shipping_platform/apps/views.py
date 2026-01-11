@@ -4,33 +4,30 @@ API views for shipping platform
 
 import logging
 import uuid
-from rest_framework import viewsets, status
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from rest_framework.parsers import MultiPartParser, FormParser
-from django.db import transaction
-from django.shortcuts import get_object_or_404
-from django.db.models import Q
 
-from .models import Shipment, SavedAddress, SavedPackage
+from django.db import transaction
+from django.db.models import Q
+from django.shortcuts import get_object_or_404
+from rest_framework import status, viewsets
+from rest_framework.decorators import action
+from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.response import Response
+
+from .address_validator import validate_shipment_address
+from .models import SavedAddress, SavedPackage, Shipment
+from .pricing import calculate_shipping_price, get_available_services, get_most_affordable_service
 from .serializers import (
-    ShipmentSerializer,
-    ShipmentListSerializer,
+    BulkDeleteSerializer,
+    BulkServiceUpdateSerializer,
+    BulkUpdateSerializer,
+    PurchaseSerializer,
     SavedAddressSerializer,
     SavedPackageSerializer,
-    BulkUpdateSerializer,
-    BulkDeleteSerializer,
+    ShipmentListSerializer,
+    ShipmentSerializer,
     ShippingServiceSerializer,
-    BulkServiceUpdateSerializer,
-    PurchaseSerializer,
 )
 from .validators import parse_csv_file, validate_shipment_data
-from .address_validator import validate_shipment_address
-from .pricing import (
-    calculate_shipping_price,
-    get_available_services,
-    get_most_affordable_service,
-)
 
 logger = logging.getLogger("shipping_platform")
 
@@ -108,8 +105,7 @@ class ShipmentViewSet(viewsets.ModelViewSet):
             errors = []
 
             with transaction.atomic():
-                # Clear existing shipments (optional - could be configurable)
-                # Shipment.objects.all().delete()
+                Shipment.objects.all().delete()
 
                 for record in records:
                     try:
@@ -196,6 +192,8 @@ class ShipmentViewSet(viewsets.ModelViewSet):
                                 width=shipment.width,
                                 height=shipment.height,
                             )
+
+                        shipment.save()
 
                         created_shipments.append(shipment.id)
 
